@@ -1,0 +1,79 @@
+# include <iostream>
+# include <algorithm>
+# include <vector>
+# include <string>
+
+using namespace std;
+
+//입찰자명 및 입찰액
+struct bid_price{
+    string bidder;
+    size_t price;
+
+};
+
+
+int main() {
+    // 입찰자 수 선정
+    int bidder_number;
+    cin >> bidder_number;
+
+    vector<bid_price> bid_arr(bidder_number);
+
+    //입찰자 수만큼 반복
+    for (int i = 0; i < bidder_number; i++)
+    {
+        cin >> bid_arr[i].bidder >> bid_arr[i].price;
+
+        if (bid_arr[i].bidder.size() >15 || (bid_arr[i].price < 1 || bid_arr[i].price > 10000)){
+                cout << "조건이 맞지 않습니다." << endl;
+                return 0;
+
+        }
+
+    };
+
+
+    //입찰액에 따른 내림차순 정렬
+    sort(bid_arr.begin(),bid_arr.end(),[](const bid_price& a,const bid_price& b) {
+        return a.price > b.price;
+    });
+
+
+
+    //중복 data제거
+    int remo;
+
+
+    for(int j = 0; j < bid_arr.size(); j++){
+        for (int i = 1; i < bid_arr.size(); i++){
+            if (bid_arr[i].price != bid_arr[i-1].price){
+                remo = i;
+                break;
+            }
+        }
+        if (remo == 1){
+            break;
+        }
+        for (int i = 0; i < remo; i++){
+            bid_arr.erase(bid_arr.begin());
+        }
+    }
+
+    if (bid_arr[0].price == bid_arr[1].price){
+        cout << "NONE";
+    }else{
+        auto maxBid = bid_arr.begin();
+        string maxBidder;
+
+        maxBidder = maxBid -> bidder;
+        cout << maxBidder;
+
+    }
+
+
+
+
+
+    return 0;
+}
