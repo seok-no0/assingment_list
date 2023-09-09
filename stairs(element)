@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+
+int main() {
+    std::string input_line;
+    std::cout << "정수들을 입력하세요 (여백으로 구분, 입력 끝에 0): ";
+    std::getline(std::cin, input_line);
+
+    std::vector<int> numbers;
+    std::istringstream iss(input_line);
+
+    int num;
+    while (iss >> num) {
+        if (num == 0) {
+            break; // 입력의 끝을 만나면 루프를 종료합니다.
+        }
+        numbers.push_back(num); // 정수를 벡터에 저장합니다.
+    }
+
+    // 벡터에 저장된 정수 출력
+    std::cout << "입력된 정수: ";
+    for (int n : numbers) {
+        std::cout << n << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
