@@ -28,3 +28,118 @@ int main() {
 
     return 0;
 }
+
+// 9/08 수정본
+
+
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+
+using namespace std;
+
+int compare(int x,vector<int>& arr){
+    int check = 0;
+    int i = 0;
+    for (int element: arr){
+        if (x < element){
+            check = 1;
+            break;
+        }
+        i += 1;
+    }
+
+    if (check == 1){
+        return i;
+    }else
+        return 20;
+}
+
+int main(){
+    string input_line;
+    getline(cin,input_line);
+
+    vector<int> odd;
+    vector<int> even;
+    istringstream iss(input_line);
+
+    int order = 1;
+    int num;
+    while (iss >> num) {
+        if (num == 0){
+            break;
+        }else if (order % 2 == 1){
+            odd.push_back(num);
+        }else if (order % 2 == 0){
+            even.push_back(num);
+        }
+        
+        order += 1;
+    }
+
+    vector<int> x_axis;
+    vector<int> y_axis;
+    int x_sum = 0;
+    int y_sum = 0;
+    for (int element: odd){
+        x_sum += element;
+        x_axis.push_back(x_sum);
+    }
+
+    for (int i = even.size()-1; i >= 0; i--){
+        y_sum += even[i];
+        y_axis.insert(y_axis.begin(),y_sum);
+
+    }
+
+    vector<int> dots_x;
+    vector<int> dots_y;
+    int x , y;
+    while (cin >> x >> y){
+        dots_x.push_back(x);
+        dots_y.push_back(y);
+    }
+
+
+//    for (int i = 0; i < x_axis.size(); i++){
+//        cout << x_axis[i] << " ";
+//
+//    }
+//    cout <<endl;
+//
+//    for (int i = 0; i < x_axis.size(); i++){
+//        cout << y_axis[i] << " ";
+//
+//    }
+//    cout <<endl;
+
+
+    for (int i = 0; i < dots_x.size(); i++){
+        int location = compare(dots_x[i],x_axis);
+//        cout << location << " ";
+        if (location == 20){
+            cout << "out" << endl;
+        }else{
+            if (dots_y[i] < y_axis[location]){
+                cout << "in" << endl;
+            }else if (dots_y[i] == y_axis[location]){
+                cout << "on" << endl;
+            }else
+                cout << "out" <<endl;
+
+        }
+
+    }
+
+
+
+
+
+
+    return 0;
+}
+
+
+
