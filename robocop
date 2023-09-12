@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> Gvertex_x;
+vector<int> Gvertex_y;
+vector<int> Gsum;
+int Gtime[5];
+
+vector<int> Garrive_time;
+vector<int> location_x;
+vector<int> location_y;
+
+
+void myin(){
+    int num;
+    cin >> num;
+
+    for (int i =0; i < num; i++){
+        int x, y;
+        cin >> x >> y;
+
+        int z = x + y;
+        Gvertex_x.push_back(x);
+        Gvertex_y.push_back(y);
+        Gsum.push_back(z);
+
+    }
+
+    cin >> Gtime[0] >> Gtime[1] >> Gtime[2] >> Gtime[3] >> Gtime[4];
+
+    Gvertex_x.push_back(Gvertex_x[0]);
+    Gvertex_y.push_back(Gvertex_y[0]);
+    Gsum.push_back(Gsum[0]);
+    location_x.push_back(Gvertex_x[0]);
+    location_y.push_back(Gvertex_y[0]);
+
+}
+
+void compute(){
+    int gap = 0;
+    for (int i = 1; i < Gsum.size(); i++){
+        gap += abs(Gsum[i] - Gsum[i-1]);
+
+        int x_gap = Gvertex_x[i] > Gvertex_x[i-1];
+        int y_gap = Gvertex_y[i] > Gvertex_y[i-1];
+
+        for (int j = 0; j < gap < j++){
+            if (x_gap == 1){
+                location_x.push_back(location_x.end()+1);
+            }
+
+
+            }
+
+        }
+
+
+
+
+
+        Garrive_time.push_back(gap);
+
+    }
+
+
+
+}
+
+
+int main(){
+    myin();
+    compute();
+
+
+}
