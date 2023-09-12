@@ -7,6 +7,7 @@ vector<int> Gvertex_x;
 vector<int> Gvertex_y;
 vector<int> Gsum;
 int Gtime[5];
+int gap = 0;
 
 vector<int> Garrive_time;
 vector<int> location_x;
@@ -39,39 +40,57 @@ void myin(){
 }
 
 void compute(){
-    int gap = 0;
     for (int i = 1; i < Gsum.size(); i++){
-        gap += abs(Gsum[i] - Gsum[i-1]);
+        int sum_gap = Gsum[i] - Gsum[i-1];
+        gap += abs(sum_gap);
 
-        int x_gap = Gvertex_x[i] > Gvertex_x[i-1];
-        int y_gap = Gvertex_y[i] > Gvertex_y[i-1];
+        int x_gap = Gvertex_x[i] == Gvertex_x[i-1];
+//        int y_gap = Gvertex_y[i] > Gvertex_y[i-1];
 
-        for (int j = 0; j < gap < j++){
-            if (x_gap == 1){
-                location_x.push_back(location_x.end()+1);
-            }
-
-
+        for (int j = 0; j < gap ; j++){
+            if (sum_gap > 0){
+                if (x_gap == 1){
+                    location_x.push_back(*location_x.end()+1);
+                    location_y.push_back(*location_y.end());
+                }else{
+                    location_x.push_back(*location_x.end());
+                    location_y.push_back(*location_y.end()+1);
+                }
+            }else{
+                if (x_gap == 1){
+                    location_x.push_back(*location_x.end()-1);
+                    location_y.push_back(*location_y.end());
+                }else{
+                    location_x.push_back(*location_x.end());
+                    location_y.push_back(*location_y.end()-1);
+                }
             }
 
         }
 
+    }
 
+}
 
+void myout(){
+    for(auto element: Gtime){
+        int num = element % gap;
+        int x_value = location_x[num];
+        int y_value = location_y[num];
 
-
-        Garrive_time.push_back(gap);
+        cout << x_value <<" " << y_value << endl;
 
     }
 
-
-
 }
+
+
+
 
 
 int main(){
     myin();
     compute();
-
+    myout();
 
 }
