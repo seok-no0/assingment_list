@@ -37,34 +37,41 @@ void myin(){
     location_x.push_back(Gvertex_x[0]);
     location_y.push_back(Gvertex_y[0]);
 
+//    for (auto element: Gtime){
+//        cout << element << endl;
+//    }
+
 }
 
 void compute(){
     for (int i = 1; i < Gsum.size(); i++){
         int sum_gap = Gsum[i] - Gsum[i-1];
         gap += abs(sum_gap);
+//        cout << sum_gap << endl;
 
-        int x_gap = Gvertex_x[i] == Gvertex_x[i-1];
+        int x_gap = Gvertex_x[i] != Gvertex_x[i-1];
 //        int y_gap = Gvertex_y[i] > Gvertex_y[i-1];
 
-        for (int j = 0; j < gap ; j++){
+        for (int j = 0; j < abs(sum_gap) ; j++){
             if (sum_gap > 0){
                 if (x_gap == 1){
-                    location_x.push_back(*location_x.end()+1);
-                    location_y.push_back(*location_y.end());
+                    location_x.push_back(location_x.back()+1);
+                    location_y.push_back(location_y.back());
                 }else{
-                    location_x.push_back(*location_x.end());
-                    location_y.push_back(*location_y.end()+1);
+                    location_x.push_back(location_x.back());
+                    location_y.push_back(location_y.back()+1);
                 }
             }else{
                 if (x_gap == 1){
-                    location_x.push_back(*location_x.end()-1);
-                    location_y.push_back(*location_y.end());
+                    location_x.push_back(location_x.back()-1);
+                    location_y.push_back(location_y.back());
                 }else{
-                    location_x.push_back(*location_x.end());
-                    location_y.push_back(*location_y.end()-1);
+                    location_x.push_back(location_x.back());
+                    location_y.push_back(location_y.back()-1);
                 }
             }
+
+//            cout << *location_x.end() << " " << *location_y.end() <<endl;
 
         }
 
@@ -83,8 +90,6 @@ void myout(){
     }
 
 }
-
-
 
 
 
