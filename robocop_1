@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct coordinate{
+    int x;
+    int y;
+};
+
+int compare(int x, vector<int>& arr){
+    int i = 0;
+    for (int element: arr){
+        if (x < element){
+            break;
+        }
+        i += 1;
+    }
+
+    return i;
+}
+
+int main(){
+    int point_number;
+    cin >> point_number;
+
+    vector<coordinate> vertex(point_number);
+    vector<int> sum;
+
+    for (int i = 0; i < point_number; i++){
+        int a, b;
+        cin >> a >> b ;
+        a, b = vertex[i].x, vertex[i].y;
+        sum.push_back(a + b);
+    }
+
+    vertex.push_back(vertex[0]);
+
+    vector<int> standard;
+    int gap = 0;
+    for (int i = 1; i < vertex.size(); i++){
+        gap += abs(sum[i] - sum[i-1]);
+        standard.push_back(gap);
+
+    }
+
+//    coordinate start;
+//    start.x, start.y = vertex[0].x , vertex[0].y;
+//
+
+//    for (coordinate element: vertex){
+//        cout << element.x <<endl;
+//    }
+
+    vector<int> check_time(5);
+
+    cin >> check_time[0] >>check_time[1] >> check_time[2] >> check_time[3] >> check_time[4];
+
+//    for (int element: check_time){
+//        cout << element <<endl;
+//    }
+
+    for (int element:check_time){
+        int number = element % *standard.end();
+        int point = compare(number,standard);
+        int point_2 = point + 1;
+        int movement = standard[point] - number;
+
+        coordinate location;
+
+        if (sum[point_2] > sum[point]){
+            if (vertex[point_2].x == vertex[point].x){
+                location.y = vertex[point_2].y - movement;
+                location.x = vertex[point_2].x;
+            }else{
+                location.x = vertex[point_2].x - movement;
+                location.y = vertex[point_2].y;
+
+            }
+        }else{
+            if (sum[point_2] < sum[point]){
+                location.y = vertex[point_2].y + movement;
+                location.x = vertex[point_2].x;
+            }else{
+                location.x = vertex[point_2].x + movement;
+                location.y = vertex[point_2].y;
+            }
+
+        }
+
+
+    }
+
+}
