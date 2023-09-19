@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+#include <algorithm>
+
+using namespace std;
+
+vector<string> Title;
+vector<array<double, 5>> Song_status;
+int Order;
+
+bool myorder ( array<double,5> left,  array<double,5> right) {
+       if (left[0] == right[0])
+            return(  left[1] > right[1] );
+       return (  left[0] > right[0] ) ;
+}
+
+void myin(){
+    int song_number;
+    cin >> song_number >> Order;
+
+
+    for (int i = 0; i <song_number ; i++){
+        string title;
+        char genre;
+        double broad, file, download;
+
+        cin >> title >> genre >> broad >> file >> download;
+        double ascii_genre = static_cast<double>(genre);
+
+        Title.push_back(title);
+        Song_status.push_back({broad,download,file,ascii_genre,i});
+    }
+}
+
+int sorting(){
+    sort(Song_status.begin(), Song_status.end(),myorder);
+    for (int i = 0; i < Song_status.size(); i++){
+        bool start_same = false;
+        int j = 0;
+        for (;j < Song_status.size()-1; j++){
+            if (Song_status[j][3] == Song_status[j+1][3]){
+                start_same = true;
+                break;
+            }
+        }
+        int num = j+1;
+        for (;j < Song_status.size()-1; j++){
+            if (start_same && Song_status[j][3] != Song_status[j+1][3]){
+                Song_status.insert(Song_status.begin()+num,Song_status[j+1]);
+                Song_status.erase(Song_status.begin()+j+2);
+                start_same = false;
+                break;
+            }
+        }
+
+    }
+
+    return Song_status[Order-1][4];
+}
+
+
+int main(){
+    myin();
+    int num = sorting();
+    cout <<Title[num];
+
+
+}
+
